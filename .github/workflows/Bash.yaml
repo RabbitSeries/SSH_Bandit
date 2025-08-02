@@ -1,0 +1,20 @@
+name: Overthewire bandit Bash
+
+on:
+  push:
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest]
+        include:
+        - os: ubuntu-latest
+          preset: "unix-release"
+    runs-on: ${{matrix.os}}
+    steps:
+      - uses: actions/checkout@v4
+
+      - run:
+          ./bandit.sh
