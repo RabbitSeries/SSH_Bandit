@@ -18,3 +18,11 @@ jobs:
 
       - run:
           ./bandit.sh
+
+      - run:
+          cat ./passwords
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Bandit.OverTheWire.Passwords
+          path: ./passwords
