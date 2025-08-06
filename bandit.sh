@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-if ! which sshpass &>/dev/null ; then echo "sshpass not found" ; fi
+if ! which sshpass &>/dev/null ; then echo "sshpass not found" ; exit -1; fi
 rm -f ./exception.log
 BANDIT_DOMAIN='bandit.labs.overthewire.org'
 BANDIT_PROT=2220
@@ -17,6 +17,7 @@ ssh_comand(){
         echo "$confused_about how to perform the bandit"
         exit -1
     fi
+	# StrictHostKeyChecking for skip fingerprint checking
     sshpass -p $2 ssh -o StrictHostKeyChecking=no "bandit${1}@${BANDIT_DOMAIN}" -p "$BANDIT_PROT" "$3" 2>>./exception.log;
     # sshpass -p $2 ssh -o StrictHostKeyChecking=no $1@"$BANDIT_DOMAIN" -p "$BANDIT_PROT" <<-END_SSH_CMD
 	# 	$3
@@ -252,7 +253,7 @@ if [ $level = 16 ]; then
                 -connect localhost:${port} \
                 -quiet \
                 -noservername \
-                -verify_quiet 2>/dev/null \
+                -verify_quiet 2>/dev/null;
         done 2>/dev/null' > level17.sshkey
     chmod 600 level17.sshkey
 	psw=$(ssh -i ./level17.sshkey bandit17@$BANDIT_DOMAIN -p $BANDIT_PROT cat /etc/bandit_pass/bandit17 2>>./exception.log)
