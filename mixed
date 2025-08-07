@@ -1,0 +1,13 @@
+‰PNG
+
+<?php 
+echo "entering\n";
+$data = './mixed';
+if (file_exists($data)){
+$is_image = exif_imagetype($data);
+echo "s_image: $is_image\n";
+}
+else{echo 'not found';}
+echo 'done\n';
+?>
+
